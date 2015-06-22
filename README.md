@@ -18,7 +18,7 @@ You can get the Slack token from [https://api.slack.com/web#auth](https://api.sl
 
 You can also set a default username by setting the `SLACK_USERNAME` environment variable
 
-   export SLACK_USERNAME="Your Name On Slack"
+    export SLACK_USERNAME="Your Name On Slack"
 
 ## Usage
 
