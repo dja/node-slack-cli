@@ -6,7 +6,7 @@ var argv = require('minimist')(process.argv.slice(2));
 var channelName = argv.c;
 var message = argv.m;
 var slackToken = process.env.SLACK_TOKEN;
-var userName = argv.u;
+var userName = argv.u || process.env.SLACK_USERNAME;
 
 if ( slackToken === undefined ) {
   console.log('undefined SLACK_TOKEN as Env Variable');
@@ -25,6 +25,6 @@ if ( typeof(message) !== 'string' ){
 
 slack = new Slack(process.env.SLACK_TOKEN);
 slack.api(
-  'chat.postMessage', {text:message, channel:'#'+channelName, username:userName},
-  function(){}
+  'chat.postMessage', {text:message, channel:channelName, username:userName},
+  function(){ }
 );
