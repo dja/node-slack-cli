@@ -3,8 +3,8 @@
 var Slack = require('slack-node');
 var argv = require('minimist')(process.argv.slice(2));
 
-var channelName = argv.c;
-var message = argv.m;
+var turnDNDOn = argv.o;
+var duration = argv.d;
 var slackToken = process.env.SLACK_TOKEN;
 var userName = argv.u || process.env.SLACK_USERNAME;
 
@@ -13,18 +13,25 @@ if ( slackToken === undefined ) {
   process.exit(1);
 }
 
-if ( typeof(channelName) !== 'string' ){
-  console.log('undefined channel argv: -c');
+if ( typeof(turnDNDOn) !== 'string' ){
+  console.log('undefined turn DND On argv: -o');
   process.exit(1);
 }
 
-if ( typeof(message) !== 'string' ){
-  console.log('undefined message argv: -m');
+if ( typeof(duration) !== 'number' ){
+  console.log('undefined duration argv: -d');
   process.exit(1);
 }
 
 slack = new Slack(process.env.SLACK_TOKEN);
-slack.api(
-  'chat.postMessage', {text:message, channel:channelName, username:userName},
-  function(){ }
-);
+if ( turnDNDOn === 'true' ) {
+  slack.api(
+    'dnd.setSnooze', { token:slackToken, num_minutes:duration },
+    function(){ }
+  );
+} else if ( turnDNDOn === 'false' ) {
+  slack.api(
+    'dnd.endSnooze', { token:slackToken },
+    function(){ }
+  );
+}
