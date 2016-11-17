@@ -6,7 +6,6 @@ var argv = require('minimist')(process.argv.slice(2));
 var turnDNDOn = argv.o;
 var duration = argv.d;
 var slackToken = process.env.SLACK_TOKEN;
-var userName = argv.u || process.env.SLACK_USERNAME;
 
 if ( slackToken === undefined ) {
   console.log('undefined SLACK_TOKEN as Env Variable');
@@ -18,13 +17,14 @@ if ( typeof(turnDNDOn) !== 'string' ){
   process.exit(1);
 }
 
-if ( typeof(duration) !== 'number' ){
-  console.log('undefined duration argv: -d');
-  process.exit(1);
-}
-
 slack = new Slack(process.env.SLACK_TOKEN);
 if ( turnDNDOn === 'true' ) {
+
+  if ( typeof(duration) !== 'number' ){
+    console.log('undefined duration argv: -d');
+    process.exit(1);
+  }
+  
   slack.api(
     'dnd.setSnooze', { token:slackToken, num_minutes:duration },
     function(){ }
