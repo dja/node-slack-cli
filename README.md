@@ -18,8 +18,8 @@ You can get the Slack token from [https://api.slack.com/web#auth](https://api.sl
 
 Turn DND On, with 30 min duration
 
-    slack-dnd -o true -d 30
+    slack -o true -d 30
     
 Turn DND Off
 
-    slack-dnd -o false
+    slack -o false
