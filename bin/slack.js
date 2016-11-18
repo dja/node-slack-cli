@@ -19,11 +19,13 @@ if ( typeof(turnDNDOn) !== 'string' ){
 
 slack = new Slack(process.env.SLACK_TOKEN);
 if ( turnDNDOn === 'true' ) {
-
-  if ( typeof(duration) !== 'number' ){
+  
+  if ( typeof(duration) === undefined ){
     console.log('undefined duration argv: -d');
     process.exit(1);
   }
+
+  duration = parseInt(duration);
   
   slack.api(
     'dnd.setSnooze', { token:slackToken, num_minutes:duration },
